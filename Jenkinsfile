@@ -20,7 +20,7 @@ node {
         string(defaultValue: '~/config/external_ip_notifier/config_email.json', description: 'Location of config json file on host device', name: 'fileConfigEmail')
         //
         docker_volumes = ["-v ${params.fileLog}:/external_ip_notifier/log/external_ip_notifier.log",
-                          "-v ${params.configEmail}:/external_ip_notifier/notify/config_email.json"].join(" ")
+                          "-v ${params.fileConfigEmail}:/external_ip_notifier/notify/config_email.json"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
