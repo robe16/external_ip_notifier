@@ -13,13 +13,13 @@ node {
     stage("parameters") {
         // Parameters passed through from the Jenkins Pipeline configuration
         string(defaultValue: 'https://github.com/robe16/external_ip_notifier.git', description: 'GitHub URL for checking out project', name: 'githubUrl')
-        string(defaultValue: 'external_ip_notifier-webserver', description: 'Name of application for Docker image and container', name: 'appName')
+        string(defaultValue: 'external_ip_notifier', description: 'Name of application for Docker image and container', name: 'appName')
         string(defaultValue: '*', description: 'Server to deploy the Docker container', name: 'deploymentServer')
         string(defaultValue: '*', description: 'Username for the server the Docker container will be deployed to (used for ssh/scp)', name: 'deploymentUsername')
         string(defaultValue: '~/logs/external_ip_notifier.log', description: 'Location of log file on host device', name: 'fileLog')
         //
         docker_volumes = ["-v ${params.fileLog}:/external_ip_notifier/log/external_ip_notifier.log",
-                          "-v ${params.configEmail}:/external_ip_notifier/email/config_email.json"].join(" ")
+                          "-v ${params.configEmail}:/external_ip_notifier/notify/config_email.json"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
