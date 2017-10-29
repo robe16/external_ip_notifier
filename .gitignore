@@ -1,3 +1,9 @@
+# config files
+config_email.json
+
+#
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
