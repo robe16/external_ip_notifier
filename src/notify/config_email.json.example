@@ -1,0 +1,18 @@
+// EXAMPLE FILE - TO BE UPDATED WITH PERSONAL DETAILS
+// THIS PYTHON FILE TO BE RENAMED TO 'config.email.json' IN PRODUCTION
+{
+    "config": {
+        "email": {
+            "SERVER": "smtp-mail.outlook.com",
+            "PORT": 587,
+            "USERNAME": "another@emailserver.com",
+            "PASSWORD": "password"
+        },
+        "notifications": {
+            "EML_TO": ["recipient_one@emailserver.com", "recipient_two@emailserver.com"]
+        },
+        "general": {
+            "name": "service_name"
+        }
+    }
+}
