@@ -29,6 +29,9 @@ def log_general(msg):
 
 
 def _log(log_msg, level=20):
+    #
+    log_msg = _add_timestamp(log_msg)
+    #
     if level == 50:
         logging.critical(log_msg)
     elif level == 40:
