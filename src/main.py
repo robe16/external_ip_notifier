@@ -11,6 +11,7 @@ try:
     #
     while True:
         #
+        # Get last & current ip
         last_ip = get_last_ip()
         current_ip = get_ip()
         #
