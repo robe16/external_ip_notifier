@@ -18,6 +18,7 @@ node {
         string(defaultValue: '*', description: 'Username for the server the Docker container will be deployed to (used for ssh/scp)', name: 'deploymentUsername')
         string(defaultValue: '~/logs/external_ip_notifier.log', description: 'Location of log file on host device', name: 'fileLog')
         string(defaultValue: '~/config/external_ip_notifier/config_email.json', description: 'Location of config json file on host device', name: 'fileConfigEmail')
+        string(defaultValue: '~/config/external_ip_notifier/ip.txt', description: 'Location of file where last IP address is saved', name: 'fileLastip')
         //
         docker_volumes = ["-v ${params.fileLog}:/external_ip_notifier/log/external_ip_notifier.log",
                           "-v ${params.fileConfigEmail}:/external_ip_notifier/notify/config_email.json"].join(" ")
