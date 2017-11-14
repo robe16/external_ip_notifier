@@ -21,7 +21,8 @@ node {
         string(defaultValue: '~/config/external_ip_notifier/ip.txt', description: 'Location of file where last IP address is saved', name: 'fileLastip')
         //
         docker_volumes = ["-v ${params.fileLog}:/external_ip_notifier/log/external_ip_notifier.log",
-                          "-v ${params.fileConfigEmail}:/external_ip_notifier/notify/config_email.json"].join(" ")
+                          "-v ${params.fileConfigEmail}:/external_ip_notifier/notify/config_email.json",
+                          "-v ${params.fileLastip}:/external_ip_notifier/ip/last_ip.txt"].join(" ")
         //
         deployLogin = "${params.deploymentUsername}@${params.deploymentServer}"
         //
