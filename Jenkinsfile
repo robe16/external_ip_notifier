@@ -60,7 +60,7 @@ node {
             // create tar file of image
             sh "docker save -o ~/${docker_img_tar} ${docker_img_name_commit}"
             // xfer tar to deploy server
-            sh "scp -v -o StrictHostKeyChecking=no ~/${docker_img_tar} ${deployLogin}:~ -p ${deploymentSSHport}"
+            sh "scp -v -o StrictHostKeyChecking=no -p ${deploymentSSHport} ~/${docker_img_tar} ${deployLogin}:~"
             // load tar into deploy server registry
             sh "ssh -o StrictHostKeyChecking=no ${deployLogin} -p ${deploymentSSHport} \"docker load -i ~/${docker_img_tar}\""
             // remove the tar file from deploy server
