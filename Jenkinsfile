@@ -52,7 +52,8 @@ node {
             String docker_img_tar = "docker_img.tar"
             //
             try {
-                sh "rm ~/${docker_img_tar}"                                                                 // remove any old tar files from cicd server
+                // remove any old tar files from cicd server
+                sh "rm ~/${docker_img_tar}"
             } catch(error) {
                 echo "No ${docker_img_tar} file to remove."
             }
