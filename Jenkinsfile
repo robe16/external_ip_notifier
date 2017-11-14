@@ -15,6 +15,7 @@ node {
         string(defaultValue: 'https://github.com/robe16/external_ip_notifier.git', description: 'GitHub URL for checking out project', name: 'githubUrl')
         string(defaultValue: 'external_ip_notifier', description: 'Name of application for Docker image and container', name: 'appName')
         string(defaultValue: '*', description: 'Server to deploy the Docker container', name: 'deploymentServer')
+        string(defaultValue: '22', description: 'Server port for SSH connections', name: 'deploymentSSHport')
         string(defaultValue: '*', description: 'Username for the server the Docker container will be deployed to (used for ssh/scp)', name: 'deploymentUsername')
         string(defaultValue: '~/logs/external_ip_notifier.log', description: 'Location of log file on host device', name: 'fileLog')
         string(defaultValue: '~/config/external_ip_notifier/config_email.json', description: 'Location of config json file on host device', name: 'fileConfigEmail')
@@ -55,13 +56,18 @@ node {
             } catch(error) {
                 echo "No ${docker_img_tar} file to remove."
             }
-            sh "docker save -o ~/${docker_img_tar} ${docker_img_name_commit}"                               // create tar file of image
-            sh "scp -v -o StrictHostKeyChecking=no ~/${docker_img_tar} ${deployLogin}:~"                    // xfer tar to deploy server
-            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} \"docker load -i ~/${docker_img_tar}\""      // load tar into deploy server registry
-            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} \"rm ~/${docker_img_tar}\""                  // remove the tar file from deploy server
-            sh "rm ~/${docker_img_tar}"                                                                     // remove the tar file from cicd server
+            // create tar file of image
+            sh "docker save -o ~/${docker_img_tar} ${docker_img_name_commit}"
+            // xfer tar to deploy server
+            sh "scp -v -o StrictHostKeyChecking=no ~/${docker_img_tar} ${deployLogin}:~ -p ${deploymentSSHport}"
+            // load tar into deploy server registry
+            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} -p ${deploymentSSHport} \"docker load -i ~/${docker_img_tar}\""
+            // remove the tar file from deploy server
+            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} -p ${deploymentSSHport} \"rm ~/${docker_img_tar}\""
+            // remove the tar file from cicd server
+            sh "rm ~/${docker_img_tar}"
             // Set 'latest' tag to most recently created docker image
-            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} \"docker tag ${docker_img_name_commit} ${docker_img_name_latest}\""
+            sh "ssh -o StrictHostKeyChecking=no ${deployLogin} -p ${deploymentSSHport} \"docker tag ${docker_img_name_commit} ${docker_img_name_latest}\""
             //
         }
 
